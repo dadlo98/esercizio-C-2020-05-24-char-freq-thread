@@ -2,8 +2,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <time.h>
-#include <ctype.h> //per tolower
 
 #include <sys/types.h>
 #include <sys/wait.h>
@@ -26,7 +24,9 @@ void * thread1_function(void * arg) {
             perror("lock");
             exit(EXIT_FAILURE);
         }
+        
         counter[(int)text[i]]++;
+        
         if(pthread_mutex_unlock(&mutex) != 0){
             perror("lock");
             exit(EXIT_FAILURE);
@@ -44,7 +44,9 @@ void * thread2_function(void * arg) {
             perror("lock");
             exit(EXIT_FAILURE);
         }
+        
         counter[(int)text[i]]++;
+        
         if(pthread_mutex_unlock(&mutex) != 0){
             perror("lock");
             exit(EXIT_FAILURE);
@@ -72,6 +74,7 @@ int main(int argc, char * argv[]) {
         perror("pthread_create");
         exit(EXIT_FAILURE);
     }
+    
     res = pthread_join(t1, NULL);
     if(res != 0) {
         perror("pthread_join");
